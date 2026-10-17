@@ -1,18 +1,16 @@
 
-from http.server import BaseHTTPRequestHandler
-import json
+from flask import Flask
 
+app = Flask(__name__)
 
-class handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        data = {
-            "message": "Python berhasil berjalan di Vercel!",
-            "status": "success"
-        }
+@app.get("/")
+def home():
+    return {"message": "Flask berjalan di Vercel!"}
 
-        body = json.dumps(data).encode("utf-8")
+@app.get("/api/hello")
+def hello():
+    return {
+        "message": "Halo dari Python!",
+        "status": "success"
+    }
 
-        self.send_response(200)
-        self.send_header("Content-Type", "application/json")
-        self.end_headers()
-        self.wfile.write(body)
